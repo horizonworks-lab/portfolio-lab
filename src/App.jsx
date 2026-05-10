@@ -280,7 +280,6 @@ function AffiliateBlock() {
 function MethodologyBlock() {
   return (
     <section className="mt-6 bg-white/90 rounded-2xl border border-slate-200 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.035)] text-slate-600">
-      <h2 className="text-base font-medium text-slate-900 mb-4">Methodology, Data &amp; Acknowledgements</h2>
 
       <div className="grid gap-5 md:grid-cols-3">
         <div>
