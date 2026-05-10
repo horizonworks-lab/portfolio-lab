@@ -143,7 +143,7 @@ function getScale(boxes) {
 
 function BoxPlot({ h, scale, dataA, dataB }) {
   const { min, max, ticks } = scale;
-  const y = (v) => 260 - ((v - min) / (max - min)) * 220;
+  const y = (v) => 255 - ((v - min) / (max - min)) * 235;
   const Box = ({ d, x, color, fill }) => (
     <g>
       <line x1={x} x2={x} y1={y(d.low)} y2={y(d.high)} stroke={color} strokeWidth="1.15" opacity="0.72" />
@@ -163,7 +163,7 @@ function BoxPlot({ h, scale, dataA, dataB }) {
       ))}
       <Box d={dataA} x={145} color="#224b75" fill="#dbeafe" />
       <Box d={dataB} x={215} color="#2f6b55" fill="#d8e7e0" />
-      <text x="180" y="286" textAnchor="middle" fontSize="13" fill="#0f172a">{h} year</text>
+      <text x="180" y="294" textAnchor="middle" fontSize="13" fill="#0f172a">{h} year</text>
     </svg>
   );
 }
@@ -197,10 +197,8 @@ function Chart({ a, b, h1, h2, mode, setMode }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
         {boxes.map(({ h, a: boxA, b: boxB }) => (
-          <div key={h} className="border border-slate-100 rounded-xl p-3 md:p-4 relative h-[360px] md:h-[330px]">
-            <div className="absolute left-4 top-4 text-xs text-slate-500 font-medium">
-              {mode} CAGR
-            </div>
+          <div key={h} className="border border-slate-100 rounded-xl p-2 md:p-4 relative h-[300px] md:h-[330px]">
+            <div className="absolute left-4 top-3 text-xs text-slate-500 font-medium z-10">{mode} CAGR</div>
 
             <BoxPlot h={h} scale={scale} dataA={boxA} dataB={boxB} />
           </div>
