@@ -387,6 +387,7 @@ export default function App() {
           </div>
         )}
         <AffiliateBlock />
+        <MethodologyBlock />
         <div className="h-[100px]" />
       </div>
       <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-3 pb-3 pointer-events-none">
