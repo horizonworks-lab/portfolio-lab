@@ -93,10 +93,12 @@ function Row({ asset, data, setData, color = "blue" }) {
   );
 }
 
-function Card({ title, data, setData, onNormalize }) {
+function Card({ title, data, setData, onNormalize, validationAttempted }) {
   const t = total(data);
   const ok = t === 100;
   const isA = title.includes("A");
+  const showError = validationAttempted && !ok;
+
   return (
     <div className="bg-white/90 rounded-2xl border border-slate-200 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.035)]">
       <div className="flex justify-between mb-3">
@@ -105,11 +107,11 @@ function Card({ title, data, setData, onNormalize }) {
           {title}
         </h3>
         <div className="flex items-center gap-2">
-          <span className={`text-xs ${ok ? "text-emerald-600" : "text-red-500"}`}>Total {t}%</span>
+          <span className={`text-xs ${showError ? "text-red-500" : ok ? "text-emerald-600" : "text-slate-400"}`}>Total {t}%</span>
           {!ok && (
             <button
               onClick={onNormalize}
-              className="text-[11px] rounded-full border border-red-200 bg-red-50 text-red-600 px-2 py-1 hover:bg-red-100"
+              className="text-[11px] rounded-full border border-slate-200 bg-slate-50 text-slate-500 px-2 py-1 hover:bg-slate-100"
             >
               Normalize
             </button>
@@ -167,7 +169,7 @@ function BoxPlot({ h, scale, dataA, dataB }) {
   );
 }
 
-function Chart({ a, b, h1, h2, mode, setMode }) {
+function Chart({ a, b, h1, h2, mode, draftMode, setDraftMode, chartAdKey }) {
   const horizons = [h1, h2].sort((x, y) => x - y);
   const boxes = useMemo(() => horizons.map((h) => ({ h, a: portfolioBox(a, h, mode), b: portfolioBox(b, h, mode) })), [a, b, h1, h2, mode]);
   const scale = getScale(boxes.flatMap((x) => [x.a, x.b]));
@@ -182,8 +184,8 @@ function Chart({ a, b, h1, h2, mode, setMode }) {
             {["Nominal", "Real"].map((m) => (
               <button
                 key={m}
-                onClick={() => setMode(m)}
-                className={`px-2.5 py-1 rounded-md ${mode === m ? "bg-slate-900 text-white" : "text-slate-500"}`}
+                onClick={() => setDraftMode(m)}
+                className={`px-2.5 py-1 rounded-md ${draftMode === m ? "bg-slate-900 text-white" : "text-slate-500"}`}
               >
                 {m}
               </button>
@@ -209,7 +211,7 @@ function Chart({ a, b, h1, h2, mode, setMode }) {
       </div>
 
       <div className="mt-5">
-        <FakeAd type="leaderboard" label="Result area AdSense slot" />
+        <FakeAd key={chartAdKey} type="leaderboard" label="Result area AdSense slot" />
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -230,11 +232,11 @@ function Chart({ a, b, h1, h2, mode, setMode }) {
 
               <tbody>
                 {[
-                  ["Best period", pa.high, pb.high],
+                  ["High", pa.high, pb.high],
                   ["Upper quartile", pa.q3, pb.q3],
                   ["Median", pa.med, pb.med],
                   ["Lower quartile", pa.q1, pb.q1],
-                  ["Worst period", pa.low, pb.low],
+                  ["Low", pa.low, pb.low],
                   ["Periods", pa.n, pb.n],
                 ].map((r) => (
                   <tr key={r[0]} className="border-b last:border-b-0 border-slate-100">
@@ -313,11 +315,33 @@ function MethodologyBlock() {
 }
 
 export default function App() {
-  const [a, setA] = useState({ sp500: 100, small_cap: 0, tbills: 0, bond10: 0, gold: 0 });
-  const [b, setB] = useState({ sp500: 60, small_cap: 0, tbills: 0, bond10: 40, gold: 0 });
-  const [selectedHorizons, setSelectedHorizons] = useState([10, 30]);
-  const [h1, h2] = selectedHorizons.length === 2 ? selectedHorizons : [selectedHorizons[0], selectedHorizons[0]];
-  const [mode, setMode] = useState("Real");
+  const initialA = { sp500: 100, small_cap: 0, tbills: 0, bond10: 0, gold: 0 };
+  const initialB = { sp500: 60, small_cap: 0, tbills: 0, bond10: 40, gold: 0 };
+  const initialHorizons = [10, 30];
+  const initialMode = "Real";
+
+  const [draftA, setDraftA] = useState(initialA);
+  const [draftB, setDraftB] = useState(initialB);
+  const [draftSelectedHorizons, setDraftSelectedHorizons] = useState(initialHorizons);
+  const [draftMode, setDraftMode] = useState(initialMode);
+
+  const [appliedA, setAppliedA] = useState(initialA);
+  const [appliedB, setAppliedB] = useState(initialB);
+  const [appliedSelectedHorizons, setAppliedSelectedHorizons] = useState(initialHorizons);
+  const [appliedMode, setAppliedMode] = useState(initialMode);
+
+  const [validationAttempted, setValidationAttempted] = useState(false);
+  const [validationMessage, setValidationMessage] = useState("");
+  const [chartAdKey, setChartAdKey] = useState(0);
+
+  const [draftH1, draftH2] = draftSelectedHorizons.length === 2
+    ? draftSelectedHorizons
+    : [draftSelectedHorizons[0], draftSelectedHorizons[0]];
+
+  const [appliedH1, appliedH2] = appliedSelectedHorizons.length === 2
+    ? appliedSelectedHorizons
+    : [appliedSelectedHorizons[0], appliedSelectedHorizons[0]];
+
   const normalizePortfolio = (p) => {
     const sum = total(p);
     if (!sum) return p;
@@ -338,7 +362,27 @@ export default function App() {
     return normalized;
   };
 
-  const ok = valid(a) && valid(b);
+  const updateChart = () => {
+    setValidationAttempted(true);
+
+    if (!valid(draftA) || !valid(draftB)) {
+      setValidationMessage("Set both portfolios to 100% before updating the chart.");
+      return;
+    }
+
+    if (draftSelectedHorizons.length !== 2) {
+      setValidationMessage("Select two investment horizons before updating the chart.");
+      return;
+    }
+
+    setAppliedA(draftA);
+    setAppliedB(draftB);
+    setAppliedSelectedHorizons(draftSelectedHorizons);
+    setAppliedMode(draftMode);
+    setValidationMessage("");
+    setChartAdKey((current) => current + 1);
+  };
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 p-4 md:p-8 pb-24">
       <style>{`:root{--slider-color:#224b75;} .portfolio-b{--slider-color:#2f6b55;} .clean-slider{appearance:none;height:8px;border-radius:999px;outline:none;} .clean-slider::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:999px;background:#fff;border:2.5px solid var(--slider-color);cursor:pointer;} .clean-slider::-moz-range-thumb{width:22px;height:22px;border-radius:999px;background:#fff;border:2.5px solid var(--slider-color);cursor:pointer;}`}</style>
@@ -347,29 +391,31 @@ export default function App() {
         <p className="text-slate-500 mb-8">Build and compare portfolios — and see how time reduces short-term risk.</p>
         <div className="mb-6"><FakeAd type="leaderboard" label="Top AdSense slot" /></div>
         <div className="grid md:grid-cols-2 gap-6 mb-6">
-          <div><Card title="Portfolio A" data={a} setData={setA} onNormalize={() => setA(normalizePortfolio(a))} /></div>
-          <div className="portfolio-b"><Card title="Portfolio B" data={b} setData={setB} onNormalize={() => setB(normalizePortfolio(b))} /></div>
+          <div><Card title="Portfolio A" data={draftA} setData={setDraftA} onNormalize={() => setDraftA(normalizePortfolio(draftA))} validationAttempted={validationAttempted} /></div>
+          <div className="portfolio-b"><Card title="Portfolio B" data={draftB} setData={setDraftB} onNormalize={() => setDraftB(normalizePortfolio(draftB))} validationAttempted={validationAttempted} /></div>
         </div>
 
-        <div className="grid grid-cols-4 md:grid-cols-8 gap-3 mb-6">
+        <div className="grid grid-cols-4 md:grid-cols-8 gap-3 mb-5">
           {HORIZONS.map((h) => {
-            const selected = h === h1 || h === h2;
+            const selected = h === draftH1 || h === draftH2;
             return (
               <button
                 key={h}
                 onClick={() => {
+                  setValidationMessage("");
+
                   if (selected) {
-                    const next = selectedHorizons.filter((x) => x !== h);
-                    setSelectedHorizons(next.length ? next : [h]);
+                    const next = draftSelectedHorizons.filter((x) => x !== h);
+                    setDraftSelectedHorizons(next.length ? next : [h]);
                     return;
                   }
 
-                  if (selectedHorizons.length === 1) {
-                    setSelectedHorizons([selectedHorizons[0], h].sort((x, y) => x - y));
+                  if (draftSelectedHorizons.length === 1) {
+                    setDraftSelectedHorizons([draftSelectedHorizons[0], h].sort((x, y) => x - y));
                     return;
                   }
 
-                  setSelectedHorizons([h]);
+                  setDraftSelectedHorizons([h]);
                 }}
                 className={`w-full px-4 py-3 rounded-xl border text-sm transition ${
                   selected
@@ -382,13 +428,35 @@ export default function App() {
             );
           })}
         </div>
-        {ok && selectedHorizons.length === 2 ? (
-          <Chart a={a} b={b} h1={h1} h2={h2} mode={mode} setMode={setMode} />
-        ) : (
-          <div className="bg-white rounded-2xl border border-slate-200 h-[380px] grid place-items-center text-slate-400 text-sm">
-            {ok ? "Select two investment horizons" : "Set both portfolios to 100%"}
-          </div>
-        )}
+
+        <div className="mb-5 flex flex-col items-stretch md:items-center">
+          <button
+            type="button"
+            onClick={updateChart}
+            className="w-full rounded-2xl bg-slate-900 px-5 py-4 text-sm font-medium text-white shadow-[0_12px_30px_rgba(15,23,42,0.16)] transition hover:bg-slate-800 active:scale-[0.99] md:max-w-[320px]"
+          >
+            Update chart
+          </button>
+          {validationAttempted && validationMessage && (
+            <p className="mt-3 text-sm text-red-500">{validationMessage}</p>
+          )}
+        </div>
+
+        <div className="mb-6">
+          <FakeAd key={`input-ad-${chartAdKey}`} type="leaderboard" label="Analysis update ad slot" />
+        </div>
+
+        <Chart
+          a={appliedA}
+          b={appliedB}
+          h1={appliedH1}
+          h2={appliedH2}
+          mode={appliedMode}
+          draftMode={draftMode}
+          setDraftMode={setDraftMode}
+          chartAdKey={chartAdKey}
+        />
+
         <AffiliateBlock />
         <MethodologyBlock />
         <div className="h-[100px]" />
