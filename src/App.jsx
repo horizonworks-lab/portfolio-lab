@@ -194,6 +194,10 @@ function Chart({ a, b, h1, h2, mode, setMode }) {
         </div>
       </div>
 
+      <p className="text-xs text-slate-500 mb-5 leading-relaxed">
+        With a random historical starting year, your outcome would fall within this range.
+      </p>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
         {boxes.map(({ h, a: boxA, b: boxB }) => (
           <div key={h} className="border border-slate-100 rounded-xl p-2 md:p-4 relative h-[300px] md:h-[330px]">
