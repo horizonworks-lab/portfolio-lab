@@ -277,6 +277,38 @@ function AffiliateBlock() {
   );
 }
 
+function MethodologyBlock() {
+  return (
+    <section className="mt-6 bg-white/90 rounded-2xl border border-slate-200 p-5 shadow-[0_10px_30px_rgba(15,23,42,0.035)] text-slate-600">
+      <h2 className="text-base font-medium text-slate-900 mb-4">Methodology, Data &amp; Acknowledgements</h2>
+
+      <div className="grid gap-5 md:grid-cols-3">
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400 mb-2">Methodology</h3>
+          <ul className="space-y-1.5 text-sm leading-6">
+            <li>Portfolios are rebalanced annually to target weights</li>
+            <li>Real returns are adjusted for inflation using U.S. CPI data</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400 mb-2">Data</h3>
+          <p className="text-sm leading-6">
+            Market return data is based on historical datasets compiled by Aswath Damodaran at New York University Stern School of Business.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400 mb-2">Acknowledgements</h3>
+          <p className="text-sm leading-6">
+            Huge thanks to Aswath Damodaran for making long-term historical market data publicly available and accessible to investors, students, and researchers around the world.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function App() {
   const [a, setA] = useState({ sp500: 100, small_cap: 0, tbills: 0, bond10: 0, gold: 0 });
   const [b, setB] = useState({ sp500: 60, small_cap: 0, tbills: 0, bond10: 40, gold: 0 });
