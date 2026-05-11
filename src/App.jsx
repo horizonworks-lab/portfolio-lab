@@ -125,15 +125,23 @@ function Card({ title, data, setData, onNormalize, validationAttempted }) {
 
 function getScale(boxes) {
   const vals = boxes.flatMap((b) => [b.low, b.high]).filter(Number.isFinite);
-  const min = Math.min(...vals, -0.05);
-  const max = Math.max(...vals, 0.05);
-  const range = max - min || 0.1;
 
-  // Tighter padding so the largest boxplot fills more of the chart area.
-  // Same scale is still used for both horizons.
-  const pad = range * 0.04;
-  const scaleMin = min - pad;
-  const scaleMax = max + pad;
+  if (!vals.length) {
+    return { min: -0.02, max: 0.02, ticks: [0.02, 0.01, 0, -0.01, -0.02] };
+  }
+
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+
+  // Shared scale across both charts, based on the lowest low and highest high
+  // across all displayed boxplots. Rounded to nearest even whole percent.
+  let scaleMin = Math.floor((min * 100) / 2) * 2 / 100;
+  let scaleMax = Math.ceil((max * 100) / 2) * 2 / 100;
+
+  if (scaleMin === scaleMax) {
+    scaleMin -= 0.02;
+    scaleMax += 0.02;
+  }
 
   return {
     min: scaleMin,
