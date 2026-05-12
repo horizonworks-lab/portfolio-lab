@@ -267,10 +267,10 @@ function Chart({ a, b, h1, h2, mode, draftMode, setDraftMode, chartAdKey }) {
                   <tr key={r[0]} className="border-b last:border-b-0 border-slate-100">
                     <td className="px-4 py-2 text-slate-500">{r[0]}</td>
                     <td className="px-4 py-2 text-right text-slate-500">
-                      {r[0] === "Periods" ? r[1] : formatMetric(r[1])}
+                      {formatMetric(r[1])}
                     </td>
                     <td className="px-4 py-2 text-right text-slate-500">
-                      {r[0] === "Periods" ? r[2] : formatMetric(r[2])}
+                      {formatMetric(r[2])}
                     </td>
                   </tr>
                 ))}
