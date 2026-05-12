@@ -240,11 +240,11 @@ function Chart({ a, b, h1, h2, mode, draftMode, setDraftMode, chartAdKey }) {
 
               <tbody>
                 {[
-                  ["High", pa.high, pb.high],
+                  ["Best period", pa.high, pb.high],
                   ["Upper quartile", pa.q3, pb.q3],
                   ["Median", pa.med, pb.med],
                   ["Lower quartile", pa.q1, pb.q1],
-                  ["Low", pa.low, pb.low],
+                  ["Worst period", pa.low, pb.low],
                   ["Periods", pa.n, pb.n],
                 ].map((r) => (
                   <tr key={r[0]} className="border-b last:border-b-0 border-slate-100">
