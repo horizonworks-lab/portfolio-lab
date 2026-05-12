@@ -220,7 +220,7 @@ function Chart({ a, b, h1, h2, mode, draftMode, setDraftMode, chartAdKey }) {
       </div>
 
       <p className="text-xs text-slate-500 mb-5 leading-relaxed">
-        With a random historical starting year, your outcome would fall within this range.
+        With a random historical starting year, your outcome would fall within this range.<br />
         Whiskers represent the 5th–95th percentile range. * marks historical extremes.
       </p>
 
