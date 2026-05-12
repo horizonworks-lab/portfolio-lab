@@ -50,9 +50,18 @@ function quantile(sorted, q) {
 
 function boxStats(values) {
   const s = [...values].sort((a, b) => a - b);
-  return { low: s[0], q1: quantile(s, 0.25), med: quantile(s, 0.5), q3: quantile(s, 0.75), high: s[s.length - 1], n: s.length };
-}
 
+  return {
+    low: s[0],
+    p5: quantile(s, 0.05),
+    q1: quantile(s, 0.25),
+    med: quantile(s, 0.5),
+    q3: quantile(s, 0.75),
+    p95: quantile(s, 0.95),
+    high: s[s.length - 1],
+    n: s.length,
+  };
+}
 function portfolioBox(portfolio, horizon, mode) {
   return boxStats(rollingCagr(portfolioAnnualReturns(portfolio, mode), horizon));
 }
@@ -153,15 +162,21 @@ function getScale(boxes) {
 function BoxPlot({ h, scale, dataA, dataB }) {
   const { min, max, ticks } = scale;
   const y = (v) => 255 - ((v - min) / (max - min)) * 235;
+
   const Box = ({ d, x, color, fill }) => (
     <g>
-      <line x1={x} x2={x} y1={y(d.low)} y2={y(d.high)} stroke={color} strokeWidth="1.15" opacity="0.72" />
-      <line x1={x - 12} x2={x + 12} y1={y(d.low)} y2={y(d.low)} stroke={color} strokeWidth="1.15" opacity="0.72" />
-      <line x1={x - 12} x2={x + 12} y1={y(d.high)} y2={y(d.high)} stroke={color} strokeWidth="1.15" opacity="0.72" />
+      <line x1={x} x2={x} y1={y(d.p5)} y2={y(d.p95)} stroke={color} strokeWidth="1.15" opacity="0.72" />
+      <line x1={x - 12} x2={x + 12} y1={y(d.p5)} y2={y(d.p5)} stroke={color} strokeWidth="1.15" opacity="0.72" />
+      <line x1={x - 12} x2={x + 12} y1={y(d.p95)} y2={y(d.p95)} stroke={color} strokeWidth="1.15" opacity="0.72" />
+
       <rect x={x - 24} y={y(d.q3)} width="48" height={Math.max(1, y(d.q1) - y(d.q3))} rx="3" fill={fill} stroke={color} strokeWidth="1.1" opacity="0.72" />
       <line x1={x - 24} x2={x + 24} y1={y(d.med)} y2={y(d.med)} stroke={color} strokeWidth="1.8" />
+
+      <text x={x} y={y(d.high) + 4} textAnchor="middle" fontSize="16" fill={color} opacity="0.78">*</text>
+      <text x={x} y={y(d.low) + 4} textAnchor="middle" fontSize="16" fill={color} opacity="0.78">*</text>
     </g>
   );
+
   return (
     <svg viewBox="0 0 360 300" className="w-full h-full">
       {ticks.map((t) => (
@@ -241,12 +256,13 @@ function Chart({ a, b, h1, h2, mode, draftMode, setDraftMode, chartAdKey }) {
 
               <tbody>
                 {[
-                  ["Best period", pa.high, pb.high],
-                  ["Upper quartile", pa.q3, pb.q3],
+                  ["Max", pa.high, pb.high],
+                  ["P95", pa.p95, pb.p95],
+                  ["P75", pa.q3, pb.q3],
                   ["Median", pa.med, pb.med],
-                  ["Lower quartile", pa.q1, pb.q1],
-                  ["Worst period", pa.low, pb.low],
-                  ["Periods", pa.n, pb.n],
+                  ["P25", pa.q1, pb.q1],
+                  ["P5", pa.p5, pb.p5],
+                  ["Min", pa.low, pb.low],
                 ].map((r) => (
                   <tr key={r[0]} className="border-b last:border-b-0 border-slate-100">
                     <td className="px-4 py-2 text-slate-500">{r[0]}</td>
