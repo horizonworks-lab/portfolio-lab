@@ -245,7 +245,22 @@ function Chart({
   return (
     <div className={`relative bg-white/90 rounded-2xl border border-slate-200 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.035)] transition duration-200 ${isUpdating ? "ring-2 ring-slate-200 opacity-90" : ""}`}>
       <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 text-sm mb-6">
-        <span>Comparison window 1928–2025</span>
+        <div className="flex items-center gap-3">
+          <span>Comparison window 1928–2025</span>
+
+           <button
+            onClick={copyLink}
+            className="text-xs text-slate-400 hover:text-slate-700 transition"
+           >
+            ↗ Copy link
+           </button>
+
+           {toastMessage && (
+             <span className="text-xs text-emerald-600 whitespace-nowrap">
+              {toastMessage}
+             </span>
+          )}
+        </div>
 
         <div className="flex items-center justify-between md:justify-start gap-4">
           <div className="grid grid-cols-2 rounded-lg border border-slate-200 bg-white p-0.5 text-xs">
