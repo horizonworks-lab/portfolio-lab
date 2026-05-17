@@ -224,13 +224,26 @@ function BoxPlot({ h, scale, dataA, dataB }) {
   );
 }
 
-function Chart({ a, b, h1, h2, mode, draftMode, setDraftMode, chartAdKey }) {
+
+function Chart({
+  a,
+  b,
+  h1,
+  h2,
+  mode,
+  draftMode,
+  setDraftMode,
+  chartAdKey,
+  isUpdating,
+  toastMessage,
+  copyLink,
+}) {
   const horizons = [h1, h2].sort((x, y) => x - y);
   const boxes = useMemo(() => horizons.map((h) => ({ h, a: portfolioBox(a, h, mode), b: portfolioBox(b, h, mode) })), [a, b, h1, h2, mode]);
   const scale = getScale(boxes.flatMap((x) => [x.a, x.b]));
 
   return (
-    <div className="bg-white/90 rounded-2xl border border-slate-200 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.035)]">
+    <div className={`relative bg-white/90 rounded-2xl border border-slate-200 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.035)] transition duration-200 ${isUpdating ? "ring-2 ring-slate-200 opacity-90" : ""}`}>
       <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 text-sm mb-6">
         <span>Comparison window 1928–2025</span>
 
@@ -478,6 +491,8 @@ export default function App() {
   const [validationMessage, setValidationMessage] = useState("");
   const [chartAdKey, setChartAdKey] = useState(0);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const [activeFooterSection, setActiveFooterSection] = useState(null);
 
   const [draftH1, draftH2] = draftSelectedHorizons.length === 2
@@ -511,6 +526,8 @@ export default function App() {
   const updateChart = () => {
     setValidationAttempted(true);
     setCopySuccess(false);
+    setIsUpdating(true);
+    setToastMessage("");
 
     if (!valid(draftA) || !valid(draftB)) {
       setValidationMessage("Set both portfolios to 100% before updating the chart.");
@@ -528,6 +545,11 @@ export default function App() {
     setAppliedMode(draftMode);
     setValidationMessage("");
     setChartAdKey((current) => current + 1);
+    
+    setTimeout(() => {
+      setIsUpdating(false);
+      setToastMessage("✓ Chart updated · Share comparison →");
+    }, 220);
   };
 
   const copyLink = async () => {
@@ -657,6 +679,9 @@ export default function App() {
           draftMode={draftMode}
           setDraftMode={setDraftMode}
           chartAdKey={chartAdKey}
+          isUpdating={isUpdating}
+          toastMessage={toastMessage}
+          copyLink={copyLink}
         />
 
         <AffiliateBlock />
