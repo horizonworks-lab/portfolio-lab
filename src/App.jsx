@@ -504,6 +504,7 @@ export default function App() {
 
   const [validationAttempted, setValidationAttempted] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
+  const [buttonSuccess, setButtonSuccess] = useState(false);
   const [chartAdKey, setChartAdKey] = useState(0);
   const [copySuccess, setCopySuccess] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -560,6 +561,12 @@ export default function App() {
     setAppliedMode(draftMode);
     setValidationMessage("");
     setChartAdKey((current) => current + 1);
+
+    setButtonSuccess(true);
+
+setTimeout(() => {
+  setButtonSuccess(false);
+}, 1500);
     
     setTimeout(() => {
       setIsUpdating(false);
@@ -660,13 +667,20 @@ export default function App() {
         </div>
 
         <div className="mb-5 flex flex-col items-stretch gap-3 md:flex-row md:items-center md:justify-center">
-          <button
-            type="button"
-            onClick={updateChart}
-            className="w-full rounded-2xl bg-slate-900 px-5 py-4 text-sm font-medium text-white shadow-[0_12px_30px_rgba(15,23,42,0.16)] transition hover:bg-slate-800 active:scale-[0.99] md:max-w-[320px]"
-          >
-            Update chart
-          </button>
+         <button
+  type="button"
+  onClick={updateChart}
+  className={`
+    w-full rounded-2xl px-5 py-4 text-sm font-medium text-white
+    transition-all duration-300
+    md:max-w-[320px]
+    ${buttonSuccess
+      ? "bg-blue-600 shadow-[0_0_28px_rgba(59,130,246,0.28)]"
+      : "bg-slate-900 shadow-[0_12px_30px_rgba(15,23,42,0.16)] hover:bg-slate-800"}
+  `}
+>
+  {buttonSuccess ? "✓ Chart updated" : "Update chart"}
+</button> 
 
           <button
             type="button"
