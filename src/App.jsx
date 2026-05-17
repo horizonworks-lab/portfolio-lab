@@ -249,9 +249,9 @@ function Chart({
 
            <button
             onClick={copyLink}
-            className="text-xs text-slate-400 hover:text-slate-700 transition"
+            className="text-xs text-slate-400 hover:text-slate-600 transition tracking-wide"
            >
-            {copySuccess ? "Copied" : "Copy link"}
+            {copySuccess ? "✓ Copied" : "↗ Copy link"}
            </button>
 
         </div>
