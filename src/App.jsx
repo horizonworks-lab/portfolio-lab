@@ -235,7 +235,6 @@ function Chart({
   setDraftMode,
   chartAdKey,
   isUpdating,
-  toastMessage,
   copyLink,
 }) {
   const horizons = [h1, h2].sort((x, y) => x - y);
@@ -502,8 +501,6 @@ export default function App() {
   const [buttonSuccess, setButtonSuccess] = useState(false);
   const [chartAdKey, setChartAdKey] = useState(0);
   const [copySuccess, setCopySuccess] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
   const [activeFooterSection, setActiveFooterSection] = useState(null);
 
   const [draftH1, draftH2] = draftSelectedHorizons.length === 2
@@ -537,8 +534,6 @@ export default function App() {
   const updateChart = () => {
     setValidationAttempted(true);
     setCopySuccess(false);
-    setIsUpdating(true);
-    setToastMessage("");
 
     if (!valid(draftA) || !valid(draftB)) {
       setValidationMessage("Set both portfolios to 100% before updating the chart.");
@@ -559,14 +554,9 @@ export default function App() {
 
     setButtonSuccess(true);
 
-setTimeout(() => {
-  setButtonSuccess(false);
-}, 1500);
-    
     setTimeout(() => {
-      setIsUpdating(false);
-      setToastMessage("✓ Chart updated · Share comparison →");
-    }, 220);
+      setButtonSuccess(false);
+    }, 1500);
   };
 
   const copyLink = async () => {
