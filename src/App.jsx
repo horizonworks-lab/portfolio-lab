@@ -456,7 +456,6 @@ export default function App() {
   const [validationMessage, setValidationMessage] = useState("");
   const [chartAdKey, setChartAdKey] = useState(0);
   const [activeFooterSection, setActiveFooterSection] = useState(null);
-
   const [copySuccess, setCopySuccess] = useState(false);
 
 const copyLink = async () => {
