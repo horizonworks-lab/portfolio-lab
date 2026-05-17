@@ -675,7 +675,7 @@ setTimeout(() => {
     transition-all duration-300
     md:max-w-[320px]
     ${buttonSuccess
-      ? "bg-blue-600 shadow-[0_0_28px_rgba(59,130,246,0.28)]"
+      ? "bg-[#334155] shadow-[0_0_24px_rgba(51,65,85,0.24)]"
       : "bg-slate-900 shadow-[0_12px_30px_rgba(15,23,42,0.16)] hover:bg-slate-800"}
   `}
 >
