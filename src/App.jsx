@@ -457,6 +457,61 @@ export default function App() {
   const [chartAdKey, setChartAdKey] = useState(0);
   const [activeFooterSection, setActiveFooterSection] = useState(null);
 
+  const [copySuccess, setCopySuccess] = useState(false);
+
+useMemo(() => {
+  const params = new URLSearchParams(window.location.search);
+
+  const parsedA = paramToPortfolio(params.get("a"));
+  const parsedB = paramToPortfolio(params.get("b"));
+
+  const parsedHorizons = (params.get("h") || "")
+    .split(",")
+    .map(Number)
+    .filter((h) => HORIZONS.includes(h));
+
+  const parsedMode =
+    params.get("m")?.toLowerCase() === "nominal"
+      ? "Nominal"
+      : "Real";
+
+  if (
+    parsedA &&
+    parsedB &&
+    valid(parsedA) &&
+    valid(parsedB) &&
+    parsedHorizons.length === 2
+  ) {
+    setDraftA(parsedA);
+    setDraftB(parsedB);
+    setAppliedA(parsedA);
+    setAppliedB(parsedB);
+
+    setDraftSelectedHorizons(parsedHorizons);
+    setAppliedSelectedHorizons(parsedHorizons);
+
+    setDraftMode(parsedMode);
+    setAppliedMode(parsedMode);
+  }
+}, []);
+
+const copyLink = async () => {
+  const url = buildShareUrl({
+    a: appliedA,
+    b: appliedB,
+    horizons: appliedSelectedHorizons,
+    mode: appliedMode,
+  });
+
+  await navigator.clipboard.writeText(url);
+
+  setCopySuccess(true);
+
+  setTimeout(() => {
+    setCopySuccess(false);
+  }, 1800);
+};
+
   const [draftH1, draftH2] = draftSelectedHorizons.length === 2
     ? draftSelectedHorizons
     : [draftSelectedHorizons[0], draftSelectedHorizons[0]];
