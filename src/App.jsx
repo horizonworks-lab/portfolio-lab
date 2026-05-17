@@ -255,11 +255,6 @@ function Chart({
             ↗ Copy link
            </button>
 
-           {toastMessage && (
-             <span className="text-xs text-emerald-600 whitespace-nowrap">
-              {toastMessage}
-             </span>
-          )}
         </div>
 
         <div className="flex items-center justify-between md:justify-start gap-4">
