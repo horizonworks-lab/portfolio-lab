@@ -459,6 +459,51 @@ export default function App() {
 
   const [copySuccess, setCopySuccess] = useState(false);
 
+const copyLink = async () => {
+  const url = buildShareUrl({
+    a: appliedA,
+    b: appliedB,
+    horizons: appliedSelectedHorizons,
+    mode: appliedMode,
+  });
+
+  const fallbackCopy = () => {
+    const textarea = document.createElement("textarea");
+    textarea.value = url;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    const successful = document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    return successful;
+  };
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(url);
+    } else {
+      const successful = fallbackCopy();
+      if (!successful) throw new Error("Fallback copy failed");
+    }
+
+    setCopySuccess(true);
+    setValidationMessage("");
+
+    setTimeout(() => {
+      setCopySuccess(false);
+    }, 1800);
+  } catch {
+    setValidationAttempted(true);
+    setValidationMessage("Could not copy the link. Please copy it from the address bar.");
+  }
+};
+
+  const [copySuccess, setCopySuccess] = useState(false);
+
 useMemo(() => {
   const params = new URLSearchParams(window.location.search);
 
