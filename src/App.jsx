@@ -442,119 +442,43 @@ export default function App() {
   const initialHorizons = [10, 30];
   const initialMode = "Real";
 
-  const [draftA, setDraftA] = useState(initialA);
-  const [draftB, setDraftB] = useState(initialB);
-  const [draftSelectedHorizons, setDraftSelectedHorizons] = useState(initialHorizons);
-  const [draftMode, setDraftMode] = useState(initialMode);
+  const getInitialState = () => {
+    const params = new URLSearchParams(window.location.search);
 
-  const [appliedA, setAppliedA] = useState(initialA);
-  const [appliedB, setAppliedB] = useState(initialB);
-  const [appliedSelectedHorizons, setAppliedSelectedHorizons] = useState(initialHorizons);
-  const [appliedMode, setAppliedMode] = useState(initialMode);
+    const urlA = paramToPortfolio(params.get("a"));
+    const urlB = paramToPortfolio(params.get("b"));
+    const urlHorizons = (params.get("h") || "")
+      .split(",")
+      .map(Number)
+      .filter((h) => HORIZONS.includes(h))
+      .sort((a, b) => a - b);
+
+    const urlMode = params.get("m")?.toLowerCase() === "nominal" ? "Nominal" : "Real";
+
+    if (urlA && urlB && valid(urlA) && valid(urlB) && urlHorizons.length === 2) {
+      return { a: urlA, b: urlB, horizons: urlHorizons, mode: urlMode };
+    }
+
+    return { a: initialA, b: initialB, horizons: initialHorizons, mode: initialMode };
+  };
+
+  const initialState = getInitialState();
+
+  const [draftA, setDraftA] = useState(initialState.a);
+  const [draftB, setDraftB] = useState(initialState.b);
+  const [draftSelectedHorizons, setDraftSelectedHorizons] = useState(initialState.horizons);
+  const [draftMode, setDraftMode] = useState(initialState.mode);
+
+  const [appliedA, setAppliedA] = useState(initialState.a);
+  const [appliedB, setAppliedB] = useState(initialState.b);
+  const [appliedSelectedHorizons, setAppliedSelectedHorizons] = useState(initialState.horizons);
+  const [appliedMode, setAppliedMode] = useState(initialState.mode);
 
   const [validationAttempted, setValidationAttempted] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
   const [chartAdKey, setChartAdKey] = useState(0);
+  const [copySuccess, setCopySuccess] = useState(false);
   const [activeFooterSection, setActiveFooterSection] = useState(null);
-  const [copySuccess, setCopySuccess] = useState(false);
-
-const copyLink = async () => {
-  const url = buildShareUrl({
-    a: appliedA,
-    b: appliedB,
-    horizons: appliedSelectedHorizons,
-    mode: appliedMode,
-  });
-
-  const fallbackCopy = () => {
-    const textarea = document.createElement("textarea");
-    textarea.value = url;
-    textarea.setAttribute("readonly", "");
-    textarea.style.position = "fixed";
-    textarea.style.left = "-9999px";
-    document.body.appendChild(textarea);
-    textarea.select();
-
-    const successful = document.execCommand("copy");
-    document.body.removeChild(textarea);
-
-    return successful;
-  };
-
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(url);
-    } else {
-      const successful = fallbackCopy();
-      if (!successful) throw new Error("Fallback copy failed");
-    }
-
-    setCopySuccess(true);
-    setValidationMessage("");
-
-    setTimeout(() => {
-      setCopySuccess(false);
-    }, 1800);
-  } catch {
-    setValidationAttempted(true);
-    setValidationMessage("Could not copy the link. Please copy it from the address bar.");
-  }
-};
-
-  const [copySuccess, setCopySuccess] = useState(false);
-
-useMemo(() => {
-  const params = new URLSearchParams(window.location.search);
-
-  const parsedA = paramToPortfolio(params.get("a"));
-  const parsedB = paramToPortfolio(params.get("b"));
-
-  const parsedHorizons = (params.get("h") || "")
-    .split(",")
-    .map(Number)
-    .filter((h) => HORIZONS.includes(h));
-
-  const parsedMode =
-    params.get("m")?.toLowerCase() === "nominal"
-      ? "Nominal"
-      : "Real";
-
-  if (
-    parsedA &&
-    parsedB &&
-    valid(parsedA) &&
-    valid(parsedB) &&
-    parsedHorizons.length === 2
-  ) {
-    setDraftA(parsedA);
-    setDraftB(parsedB);
-    setAppliedA(parsedA);
-    setAppliedB(parsedB);
-
-    setDraftSelectedHorizons(parsedHorizons);
-    setAppliedSelectedHorizons(parsedHorizons);
-
-    setDraftMode(parsedMode);
-    setAppliedMode(parsedMode);
-  }
-}, []);
-
-const copyLink = async () => {
-  const url = buildShareUrl({
-    a: appliedA,
-    b: appliedB,
-    horizons: appliedSelectedHorizons,
-    mode: appliedMode,
-  });
-
-  await navigator.clipboard.writeText(url);
-
-  setCopySuccess(true);
-
-  setTimeout(() => {
-    setCopySuccess(false);
-  }, 1800);
-};
 
   const [draftH1, draftH2] = draftSelectedHorizons.length === 2
     ? draftSelectedHorizons
@@ -586,6 +510,7 @@ const copyLink = async () => {
 
   const updateChart = () => {
     setValidationAttempted(true);
+    setCopySuccess(false);
 
     if (!valid(draftA) || !valid(draftB)) {
       setValidationMessage("Set both portfolios to 100% before updating the chart.");
@@ -605,13 +530,58 @@ const copyLink = async () => {
     setChartAdKey((current) => current + 1);
   };
 
+  const copyLink = async () => {
+    const url = buildShareUrl({
+      a: appliedA,
+      b: appliedB,
+      horizons: appliedSelectedHorizons,
+      mode: appliedMode,
+    });
+
+    const fallbackCopy = () => {
+      const textarea = document.createElement("textarea");
+      textarea.value = url;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      const successful = document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      return successful;
+    };
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        const successful = fallbackCopy();
+        if (!successful) throw new Error("Fallback copy failed");
+      }
+
+      setCopySuccess(true);
+      setValidationMessage("");
+
+      setTimeout(() => {
+        setCopySuccess(false);
+      }, 1800);
+    } catch {
+      setValidationAttempted(true);
+      setValidationMessage("Could not copy the link. Please copy it from the address bar.");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 p-4 md:p-8 pb-24">
       <style>{`:root{--slider-color:#224b75;} .portfolio-b{--slider-color:#2f6b55;} .clean-slider{appearance:none;height:8px;border-radius:999px;outline:none;} .clean-slider::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:999px;background:#fff;border:2.5px solid var(--slider-color);cursor:pointer;} .clean-slider::-moz-range-thumb{width:22px;height:22px;border-radius:999px;background:#fff;border:2.5px solid var(--slider-color);cursor:pointer;}`}</style>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-2">Two portfolios. Two horizons. <span className="text-emerald-600">One clear perspective.</span></h1>
         <p className="text-slate-500 mb-8">Build and compare portfolios — and see how time reduces short-term risk.</p>
+
         <div className="mb-6"><FakeAd type="leaderboard" label="Top AdSense slot" /></div>
+
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <div><Card title="Portfolio A" data={draftA} setData={setDraftA} onNormalize={() => setDraftA(normalizePortfolio(draftA))} validationAttempted={validationAttempted} /></div>
           <div className="portfolio-b"><Card title="Portfolio B" data={draftB} setData={setDraftB} onNormalize={() => setDraftB(normalizePortfolio(draftB))} validationAttempted={validationAttempted} /></div>
@@ -625,6 +595,7 @@ const copyLink = async () => {
                 key={h}
                 onClick={() => {
                   setValidationMessage("");
+                  setCopySuccess(false);
 
                   if (selected) {
                     const next = draftSelectedHorizons.filter((x) => x !== h);
@@ -651,7 +622,7 @@ const copyLink = async () => {
           })}
         </div>
 
-        <div className="mb-5 flex flex-col items-stretch md:items-center">
+        <div className="mb-5 flex flex-col items-stretch gap-3 md:flex-row md:items-center md:justify-center">
           <button
             type="button"
             onClick={updateChart}
@@ -659,8 +630,17 @@ const copyLink = async () => {
           >
             Update chart
           </button>
+
+          <button
+            type="button"
+            onClick={copyLink}
+            className="w-full rounded-2xl border border-slate-200 bg-white/90 px-5 py-4 text-sm font-medium text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.05)] transition hover:border-slate-300 hover:bg-white active:scale-[0.99] md:max-w-[180px]"
+          >
+            {copySuccess ? "Copied!" : "Copy link"}
+          </button>
+
           {validationAttempted && validationMessage && (
-            <p className="mt-3 text-sm text-red-500">{validationMessage}</p>
+            <p className="mt-1 text-sm text-red-500 md:mt-0">{validationMessage}</p>
           )}
         </div>
 
@@ -684,6 +664,7 @@ const copyLink = async () => {
         <FooterInfo activeSection={activeFooterSection} setActiveSection={setActiveFooterSection} />
         <div className="h-[100px]" />
       </div>
+
       <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-3 pb-3 pointer-events-none">
         <div className="pointer-events-auto w-full max-w-3xl h-[64px] rounded-2xl border border-slate-200 bg-white/95 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] grid place-items-center text-center">
           <div><div className="text-[10px] uppercase tracking-[0.18em] text-slate-400">Sticky bottom ad</div><div className="text-xs text-slate-500">Fake AdSense preview · 320x50 / responsive</div></div>
