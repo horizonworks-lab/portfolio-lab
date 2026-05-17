@@ -68,6 +68,38 @@ function portfolioBox(portfolio, horizon, mode) {
 
 function formatMetric(v) { return `${(v * 100).toFixed(1)}%`; }
 
+function portfolioToParam(portfolio) {
+  return ASSETS.map((asset) => Number(portfolio[asset.key] || 0)).join(",");
+}
+
+function paramToPortfolio(value) {
+  if (!value) return null;
+
+  const parts = value.split(",").map((part) => Number(part));
+
+  if (
+    parts.length !== ASSETS.length ||
+    parts.some((part) => !Number.isFinite(part) || part < 0 || part > 100)
+  ) {
+    return null;
+  }
+
+  return Object.fromEntries(
+    ASSETS.map((asset, index) => [asset.key, parts[index]])
+  );
+}
+
+function buildShareUrl({ a, b, horizons, mode }) {
+  const url = new URL(window.location.href);
+
+  url.searchParams.set("a", portfolioToParam(a));
+  url.searchParams.set("b", portfolioToParam(b));
+  url.searchParams.set("h", horizons.join(","));
+  url.searchParams.set("m", mode.toLowerCase());
+
+  return url.toString();
+}
+
 function FakeAd({ type = "display", label = "Advertisement" }) {
   return (
     <div className={`rounded-xl border border-dashed border-slate-300 bg-slate-50/80 text-slate-400 grid place-items-center ${type === "leaderboard" ? "h-[90px]" : "h-[250px]"}`}>
