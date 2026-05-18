@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { DATA } from "./data";
+import { trackChartUpdate, trackCopyLink } from "./analytics";
 
 const ASSETS = [
   { key: "sp500", label: "S&P 500", start: 1928 },
@@ -248,7 +249,7 @@ function Chart({
           <span>Comparison window 1928–2025</span>
 
            <button
-            onClick={copyLink}
+            onClick={() => copyLink("utility")}
             className="text-xs text-slate-400 hover:text-slate-600 transition tracking-wide"
            >
             {copySuccess ? "✓ Copied" : "↗ Copy link"}
@@ -551,15 +552,14 @@ export default function App() {
     setAppliedMode(draftMode);
     setValidationMessage("");
     setChartAdKey((current) => current + 1);
-
+    trackChartUpdate();
     setButtonSuccess(true);
-
     setTimeout(() => {
       setButtonSuccess(false);
     }, 1500);
   };
 
-  const copyLink = async () => {
+  const copyLink = async (buttonVariant = "primary") => {
     const url = buildShareUrl({
       a: appliedA,
       b: appliedB,
@@ -591,6 +591,7 @@ export default function App() {
       }
 
       setCopySuccess(true);
+      trackCopyLink(buttonVariant);
       setValidationMessage("");
 
       setTimeout(() => {
@@ -669,7 +670,7 @@ export default function App() {
 
           <button
             type="button"
-            onClick={copyLink}
+            onClick={() => copyLink("primary")}
             className="w-full rounded-2xl border border-slate-200 bg-white/90 px-5 py-4 text-sm font-medium text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.05)] transition hover:border-slate-300 hover:bg-white active:scale-[0.99] md:max-w-[180px]"
           >
             {copySuccess ? "Copied!" : "Copy link"}
