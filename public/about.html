@@ -1,36 +1,174 @@
-Why I Built This
-When I think about investing, I often find myself looking for different things depending on the goal.
-If I'm thinking about retirement 30 years from now, I care much more about long-term opportunity than short-term volatility.
-If I'm thinking about buying a house in five years, I suddenly care a lot more about the worst historical outcomes.
-Sometimes I want to understand the downside.
-Sometimes I want to understand what was typical.
-Sometimes I just want to see how good the best outcomes were.
-I also kept hearing that a longer investment horizon reduces risk. Intuitively, that made sense, but I never felt I had a good visual understanding of how much historical uncertainty actually changed as time horizons grew longer.
-Most investing discussions seemed to focus on average returns.
-But I found myself more interested in the range of outcomes.
-How wide was the gap between good and bad historical periods?
-How did that gap change with time?
-How did different portfolios change the trade-off between risk and opportunity?
-And what did all of that look like after inflation?
-I wasn't looking for a better average. I was looking for a better understanding.
-I wanted a simple way to explore those questions visually and build intuition around risk, uncertainty and time.
-I couldn't find exactly what I was looking for, so I built it.
-Data & Methodology
-The analysis is based on rolling historical periods rather than selected examples. Instead of showing what happened to an investor who started in a single year, the tool evaluates every possible starting year available in the dataset and displays the full distribution of outcomes.
-All returns are adjusted for inflation using U.S. CPI data, allowing comparisons in terms of purchasing power rather than nominal returns.
-Portfolios are rebalanced annually to their target weights.
-The underlying market data is based on long-term historical datasets compiled by Aswath Damodaran at New York University Stern School of Business.
-I intentionally chose investable asset classes such as stocks, bonds, treasury bills and gold rather than theoretical factor portfolios. My goal was to make the results easier to relate to and easier to compare with real-world investment decisions.
-I also wanted the analysis to be grounded in actual historical market experience rather than simulated return paths. Sequence of returns matters, and I find it easier to reason about outcomes when looking at scenarios that investors actually lived through.
-The methodology is intentionally simple and transparent:
-Historical market data rather than forecasts
-Actual historical periods rather than simulations
-Investable asset classes rather than theoretical factors
-Inflation-adjusted returns rather than nominal returns
-Full distributions of outcomes rather than a single average return
-Huge thanks to Aswath Damodaran for making long-term historical market data publicly available to investors, students and researchers around the world.
-What This Is
-A historical portfolio analysis tool for exploring how asset allocation and investment horizon influenced the distribution of historical outcomes.
-Feel free to experiment and draw your own conclusions.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Why I Built This | Horizon Works Lab</title>
 
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #222;
+      background: #fff;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-top: 50px;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    p {
+      margin-bottom: 18px;
+    }
+
+    ul {
+      margin-top: 15px;
+      margin-bottom: 25px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .intro {
+      font-size: 1.1rem;
+    }
+
+    .footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Why I Built This</h1>
+
+  <p class="intro">
+    When I think about investing, I often find myself looking for different things depending on the goal.
+  </p>
+
+  <p>
+    If I'm thinking about retirement 30 years from now, I care much more about long-term opportunity than short-term volatility.
+  </p>
+
+  <p>
+    If I'm thinking about buying a house in five years, I suddenly care a lot more about the worst historical outcomes.
+  </p>
+
+  <p>
+    Sometimes I want to understand the downside.
+    Sometimes I want to understand what was typical.
+    Sometimes I just want to see how good the best outcomes were.
+  </p>
+
+  <p>
+    I also kept hearing that a longer investment horizon reduces risk.
+    Intuitively, that made sense, but I never felt I had a good visual understanding of how much historical uncertainty actually changed as time horizons grew longer.
+  </p>
+
+  <p>
+    Most investing discussions seemed to focus on average returns.
+  </p>
+
+  <p>
+    But I found myself more interested in the range of outcomes.
+  </p>
+
+  <p>
+    How wide was the gap between good and bad historical periods?
+    How did that gap change with time?
+    How did different portfolios change the trade-off between risk and opportunity?
+    And what did all of that look like after inflation?
+  </p>
+
+  <p>
+    I wasn't looking for a better average.
+    I was looking for a better understanding.
+  </p>
+
+  <p>
+    I wanted a simple way to explore those questions visually and build intuition around risk, uncertainty and time.
+  </p>
+
+  <p>
+    I couldn't find exactly what I was looking for, so I built it.
+  </p>
+
+  <h2>Data & Methodology</h2>
+
+  <p>
+    The analysis is based on rolling historical periods rather than selected examples.
+    Instead of showing what happened to an investor who started in a single year, the tool evaluates every possible starting year available in the dataset and displays the full distribution of outcomes.
+  </p>
+
+  <p>
+    All returns are adjusted for inflation using U.S. CPI data, allowing comparisons in terms of purchasing power rather than nominal returns.
+  </p>
+
+  <p>
+    Portfolios are rebalanced annually to their target weights.
+  </p>
+
+  <p>
+    The underlying market data is based on long-term historical datasets compiled by Aswath Damodaran at New York University Stern School of Business.
+  </p>
+
+  <p>
+    I intentionally chose investable asset classes such as stocks, bonds, treasury bills and gold rather than theoretical factor portfolios.
+    My goal was to make the results easier to relate to and easier to compare with real-world investment decisions.
+  </p>
+
+  <p>
+    I also wanted the analysis to be grounded in actual historical market experience rather than simulated return paths.
+    Sequence of returns matters, and I find it easier to reason about outcomes when looking at scenarios that investors actually lived through.
+  </p>
+
+  <p>
+    The methodology is intentionally simple and transparent:
+  </p>
+
+  <ul>
+    <li>Historical market data rather than forecasts</li>
+    <li>Actual historical periods rather than simulations</li>
+    <li>Investable asset classes rather than theoretical factors</li>
+    <li>Inflation-adjusted returns rather than nominal returns</li>
+    <li>Full distributions of outcomes rather than a single average return</li>
+  </ul>
+
+  <p>
+    Huge thanks to Aswath Damodaran for making long-term historical market data publicly available to investors, students and researchers around the world.
+  </p>
+
+  <h2>What This Is</h2>
+
+  <p>
+    A historical portfolio analysis tool for exploring how asset allocation and investment horizon influenced the distribution of historical outcomes.
+  </p>
+
+  <p>
+    Feel free to experiment and draw your own conclusions.
+  </p>
+
+  <div class="footer">
+    Horizon Works Lab
+  </div>
+
+</body>
+</html>
