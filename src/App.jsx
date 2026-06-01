@@ -666,7 +666,6 @@ export default function App() {
           copySuccess={copySuccess}
         />
 
-        <AffiliateBlock />
         <MethodologyBlock />
         <FooterInfo activeSection={activeFooterSection} setActiveSection={setActiveFooterSection} />
         <div className="h-[100px]" />
