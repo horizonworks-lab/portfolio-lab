@@ -581,6 +581,13 @@ export default function App() {
     <main className="min-h-screen bg-slate-50 text-slate-900 p-4 md:p-8 pb-24">
       <style>{`:root{--slider-color:#224b75;} .portfolio-b{--slider-color:#2f6b55;} .clean-slider{appearance:none;height:8px;border-radius:999px;outline:none;} .clean-slider::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:999px;background:#fff;border:2.5px solid var(--slider-color);cursor:pointer;} .clean-slider::-moz-range-thumb{width:22px;height:22px;border-radius:999px;background:#fff;border:2.5px solid var(--slider-color);cursor:pointer;}`}</style>
       <div className="max-w-6xl mx-auto">
+        <nav className="mb-6 flex flex-wrap gap-4 text-sm text-slate-600">
+          <a href="/" className="hover:text-slate-900">Portfolio Tool</a>
+          <a href="/analysis.html" className="hover:text-slate-900">Analysis</a>
+          <a href="/about.html" className="hover:text-slate-900">About</a>
+          <a href="/privacy.html" className="hover:text-slate-900">Privacy</a>
+          <a href="/terms.html" className="hover:text-slate-900">Terms</a>
+        </nav>
         <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-2">Two portfolios. Two horizons. <span className="text-emerald-600">One clear perspective.</span></h1>
            <p className="mb-8">
               <a
