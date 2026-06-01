@@ -1,162 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <style>
+    body {
+      background: #f5f7fa;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.7;
+      color: #1f2937;
+    }
 
+    .card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      }
 
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
 
-<p class="intro">
-Reddit Question
-</p>
+    h2 {
+      margin-top: 50px;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
 
-<h1>How Different Were Historical Outcomes Over 5, 10, 20 and 30 Year Investment Horizons?</h1>
+    p {
+      margin-bottom: 18px;
+    }
 
-<p>
-One of the most common investing lessons is that a longer investment horizon reduces risk.
-</p>
+    ul {
+      margin-top: 15px;
+      margin-bottom: 25px;
+      padding-left: 24px;
+    }
 
-<p>
-Most investors have probably heard some version of the advice: <em>"stay invested for the long term."</em>
-</p>
+    li {
+      margin-bottom: 10px;
+    }
 
-<p>
-But how much difference does time actually make?
-</p>
+    .intro {
+      font-size: 1.1rem;
+    }
 
-<p>
-One way to think about the question is whether longer holding periods increased average returns.
-</p>
+    .footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
 
-<p>
-Another way is to ask whether longer holding periods reduced the gap between good and bad historical outcomes.
-</p>
+<body>
 
-<p>
-For an investor saving for a house in five years, the range of possible outcomes may matter a great deal. For an investor saving for retirement in thirty years, that same range may look very different.
-</p>
+  <p>
+  <a href="/">← Back to Portfolio Tool</a>
+  </p>
 
-<h2>Historical Outcomes</h2>
+  <div class="card">
 
-<p>
-To explore this question, I analyzed every rolling historical investment period available in the dataset using a 100% S&amp;P 500 portfolio.
-</p>
-
-<p>
-Rather than focusing on a single average return, the charts below show the full distribution of inflation-adjusted outcomes across different investment horizons.
-</p>
-
-<h2>5-Year Horizon</h2>
-
-<ul>
-<li>Worst outcome: -10.3% real annualized return</li>
-<li>5th percentile: -6.5%</li>
-<li>25th percentile: +0.4%</li>
-<li>Median outcome: +8.4%</li>
-<li>75th percentile: +11.8%</li>
-<li>95th percentile: +20.7%</li>
-<li>Best outcome: +25.3%</li>
-</ul>
-
-<h2>10-Year Horizon</h2>
-
-<ul>
-<li>Worst outcome: -3.8% real annualized return</li>
-<li>5th percentile: -2.4%</li>
-<li>25th percentile: +3.1%</li>
-<li>Median outcome: +6.7%</li>
-<li>75th percentile: +11.1%</li>
-<li>95th percentile: +15.0%</li>
-<li>Best outcome: +17.9%</li>
-</ul>
-
-<h2>20-Year Horizon</h2>
-
-<ul>
-<li>Worst outcome: +0.6% real annualized return</li>
-<li>5th percentile: -2.0%</li>
-<li>25th percentile: +4.1%</li>
-<li>Median outcome: +7.0%</li>
-<li>75th percentile: +9.2%</li>
-<li>95th percentile: +12.5%</li>
-<li>Best outcome: +13.2%</li>
-</ul>
-
-<h2>30-Year Horizon</h2>
-
-<ul>
-<li>Worst outcome: +4.3% real annualized return</li>
-<li>5th percentile: +4.6%</li>
-<li>25th percentile: +6.1%</li>
-<li>Median outcome: +7.3%</li>
-<li>75th percentile: +8.1%</li>
-<li>95th percentile: +9.6%</li>
-<li>Best outcome: +10.1%</li>
-</ul>
-
-<p>
-The most obvious observation is how dramatically the range of typical outcomes narrowed as the investment horizon increased.
-</p>
-
-<p>
-Over five years, 90% of historical outcomes fell between -6.5% and +20.7% real annualized returns.
-</p>
-
-<p>
-Over ten years, that range narrowed to -2.4% and +15.0%.
-</p>
-
-<p>
-Over twenty years, it narrowed further to -2.0% and +12.5%.
-</p>
-
-<p>
-By thirty years, 90% of historical outcomes fell within a relatively narrow range of +4.6% to +9.6% real annualized returns.
-</p>
-
-<p>
-Interestingly, the median outcome changed much less than the range itself. Median returns ranged from 6.7% to 8.4% across all four investment horizons.
-</p>
-
-<p>
-The larger effect of time was therefore not higher returns, but greater predictability.
-</p>
-
-<p>
-Another observation is how quickly poor outcomes became less severe as the investment horizon increased.
-</p>
-
-<p>
-Over five years, investors in the 25th percentile barely stayed ahead of inflation, earning just 0.4% real annualized returns.
-</p>
-
-<p>
-Over thirty years, the 25th percentile outcome increased to 6.1% real annualized returns.
-</p>
-
-<p>
-This suggests that the most important benefit of a longer investment horizon may not be maximizing returns. It may be reducing uncertainty and making outcomes less dependent on starting year.
-</p>
-
-<h2>Key Takeaways</h2>
-
-<ul>
-<li>The median outcome changed relatively little, ranging from 6.7% to 8.4% across all investment horizons.</li>
-<li>The range containing 90% of historical outcomes narrowed from -6.5% to +20.7% over five years to +4.6% to +9.6% over thirty years.</li>
-<li>The primary benefit of time was not higher returns, but greater predictability and less dependence on starting year.</li>
-</ul>
-
-<h2>Explore Your Own Scenarios</h2>
-
-<p>
-Historical data can help illuminate trade-offs, but it cannot determine which outcome an investor should prefer.
-</p>
-
-<p>
-This analysis looked only at a 100% S&amp;P 500 portfolio. Different patterns may emerge when looking at portfolios that include bonds, treasury bills, gold or other asset allocations.
-</p>
-
-<p>
-Some investors may be comfortable accepting a wider range of possible outcomes in exchange for higher upside potential. Others may prefer a portfolio that narrows the range of historical outcomes, even if that comes at the cost of lower returns.
-</p>
-
-<p>
-Explore the data using your own assumptions in the Portfolio Tool.
-</p>
+  <p class="intro">
+  Reddit Question
+  </p>
+  
+  <h1>How Different Were Historical Outcomes Over 5, 10, 20 and 30 Year Investment Horizons?</h1>
+  
+  <p>
+  One of the most common investing lessons is that a longer investment horizon reduces risk.
+  </p>
+  
+  <p>
+  Most investors have probably heard some version of the advice: <em>"stay invested for the long term."</em>
+  </p>
+  
+  <p>
+  But how much difference does time actually make?
+  </p>
+  
+  <p>
+  One way to think about the question is whether longer holding periods increased average returns.
+  </p>
+  
+  <p>
+  Another way is to ask whether longer holding periods reduced the gap between good and bad historical outcomes.
+  </p>
+  
+  <p>
+  For an investor saving for a house in five years, the range of possible outcomes may matter a great deal. For an investor saving for retirement in thirty years, that same range may look very different.
+  </p>
+  
+  <h2>Historical Outcomes</h2>
+  
+  <p>
+  To explore this question, I analyzed every rolling historical investment period available in the dataset using a 100% S&amp;P 500 portfolio.
+  </p>
+  
+  <p>
+  Rather than focusing on a single average return, the charts below show the full distribution of inflation-adjusted outcomes across different investment horizons.
+  </p>
+  
+  <h2>5-Year Horizon</h2>
+  
+  <ul>
+  <li>Worst outcome: -10.3% real annualized return</li>
+  <li>5th percentile: -6.5%</li>
+  <li>25th percentile: +0.4%</li>
+  <li>Median outcome: +8.4%</li>
+  <li>75th percentile: +11.8%</li>
+  <li>95th percentile: +20.7%</li>
+  <li>Best outcome: +25.3%</li>
+  </ul>
+  
+  <h2>10-Year Horizon</h2>
+  
+  <ul>
+  <li>Worst outcome: -3.8% real annualized return</li>
+  <li>5th percentile: -2.4%</li>
+  <li>25th percentile: +3.1%</li>
+  <li>Median outcome: +6.7%</li>
+  <li>75th percentile: +11.1%</li>
+  <li>95th percentile: +15.0%</li>
+  <li>Best outcome: +17.9%</li>
+  </ul>
+  
+  <h2>20-Year Horizon</h2>
+  
+  <ul>
+  <li>Worst outcome: +0.6% real annualized return</li>
+  <li>5th percentile: -2.0%</li>
+  <li>25th percentile: +4.1%</li>
+  <li>Median outcome: +7.0%</li>
+  <li>75th percentile: +9.2%</li>
+  <li>95th percentile: +12.5%</li>
+  <li>Best outcome: +13.2%</li>
+  </ul>
+  
+  <h2>30-Year Horizon</h2>
+  
+  <ul>
+  <li>Worst outcome: +4.3% real annualized return</li>
+  <li>5th percentile: +4.6%</li>
+  <li>25th percentile: +6.1%</li>
+  <li>Median outcome: +7.3%</li>
+  <li>75th percentile: +8.1%</li>
+  <li>95th percentile: +9.6%</li>
+  <li>Best outcome: +10.1%</li>
+  </ul>
+  
+  <p>
+  The most obvious observation is how dramatically the range of typical outcomes narrowed as the investment horizon increased.
+  </p>
+  
+  <p>
+  Over five years, 90% of historical outcomes fell between -6.5% and +20.7% real annualized returns.
+  </p>
+  
+  <p>
+  Over ten years, that range narrowed to -2.4% and +15.0%.
+  </p>
+  
+  <p>
+  Over twenty years, it narrowed further to -2.0% and +12.5%.
+  </p>
+  
+  <p>
+  By thirty years, 90% of historical outcomes fell within a relatively narrow range of +4.6% to +9.6% real annualized returns.
+  </p>
+  
+  <p>
+  Interestingly, the median outcome changed much less than the range itself. Median returns ranged from 6.7% to 8.4% across all four investment horizons.
+  </p>
+  
+  <p>
+  The larger effect of time was therefore not higher returns, but greater predictability.
+  </p>
+  
+  <p>
+  Another observation is how quickly poor outcomes became less severe as the investment horizon increased.
+  </p>
+  
+  <p>
+  Over five years, investors in the 25th percentile barely stayed ahead of inflation, earning just 0.4% real annualized returns.
+  </p>
+  
+  <p>
+  Over thirty years, the 25th percentile outcome increased to 6.1% real annualized returns.
+  </p>
+  
+  <p>
+  This suggests that the most important benefit of a longer investment horizon may not be maximizing returns. It may be reducing uncertainty and making outcomes less dependent on starting year.
+  </p>
+  
+  <h2>Key Takeaways</h2>
+  
+  <ul>
+  <li>The median outcome changed relatively little, ranging from 6.7% to 8.4% across all investment horizons.</li>
+  <li>The range containing 90% of historical outcomes narrowed from -6.5% to +20.7% over five years to +4.6% to +9.6% over thirty years.</li>
+  <li>The primary benefit of time was not higher returns, but greater predictability and less dependence on starting year.</li>
+  </ul>
+  
+  <h2>Explore Your Own Scenarios</h2>
+  
+  <p>
+  Historical data can help illuminate trade-offs, but it cannot determine which outcome an investor should prefer.
+  </p>
+  
+  <p>
+  This analysis looked only at a 100% S&amp;P 500 portfolio. Different patterns may emerge when looking at portfolios that include bonds, treasury bills, gold or other asset allocations.
+  </p>
+  
+  <p>
+  Some investors may be comfortable accepting a wider range of possible outcomes in exchange for higher upside potential. Others may prefer a portfolio that narrows the range of historical outcomes, even if that comes at the cost of lower returns.
+  </p>
+  
+  <p>
+  Explore the data using your own assumptions in the Portfolio Tool.
+  </p>
 
