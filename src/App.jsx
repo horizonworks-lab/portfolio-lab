@@ -101,17 +101,6 @@ function buildShareUrl({ a, b, horizons, mode }) {
   return url.toString();
 }
 
-function FakeAd({ type = "display", label = "Advertisement" }) {
-  return (
-    <div className={`rounded-xl border border-dashed border-slate-300 bg-slate-50/80 text-slate-400 grid place-items-center ${type === "leaderboard" ? "h-[90px]" : "h-[250px]"}`}>
-      <div className="text-center px-4">
-        <div className="text-[10px] uppercase tracking-[0.18em] mb-2">{label}</div>
-        <div className="text-sm text-slate-500">Fake ad preview</div>
-      </div>
-    </div>
-  );
-}
-
 function Row({ asset, data, setData, color = "blue" }) {
   const v = data[asset.key] || 0;
   const sliderColor = color === "green" ? "#2f6b55" : "#224b75";
@@ -287,10 +276,6 @@ function Chart({
             <BoxPlot h={h} scale={scale} dataA={boxA} dataB={boxB} />
           </div>
         ))}
-      </div>
-
-      <div className="mt-5">
-        <FakeAd key={chartAdKey} type="leaderboard" label="Result area AdSense slot" />
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -624,8 +609,6 @@ export default function App() {
         <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-2">Two portfolios. Two horizons. <span className="text-emerald-600">One clear perspective.</span></h1>
         <p className="text-slate-500 mb-8">Build and compare portfolios — and see how time reduces short-term risk.</p>
 
-        <div className="mb-6"><FakeAd type="leaderboard" label="Top AdSense slot" /></div>
-
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <div><Card title="Portfolio A" data={draftA} setData={setDraftA} onNormalize={() => setDraftA(normalizePortfolio(draftA))} validationAttempted={validationAttempted} /></div>
           <div className="portfolio-b"><Card title="Portfolio B" data={draftB} setData={setDraftB} onNormalize={() => setDraftB(normalizePortfolio(draftB))} validationAttempted={validationAttempted} /></div>
@@ -693,10 +676,6 @@ export default function App() {
           {validationAttempted && validationMessage && (
             <p className="mt-1 text-sm text-red-500 md:mt-0">{validationMessage}</p>
           )}
-        </div>
-
-        <div className="mb-6">
-          <FakeAd key={`input-ad-${chartAdKey}`} type="leaderboard" label="Analysis update ad slot" />
         </div>
 
         <Chart
