@@ -397,6 +397,20 @@ function MethodologyBlock() {
 function FooterInfo({ activeSection, setActiveSection }) {
   const contactEmail = "mikael.strommer@gmail.com";
 
+  analysis: {
+  title: "Analysis",
+  content: (
+    <p>
+      <a
+        href="/analysis.html"
+        className="text-blue-600 hover:underline"
+      >
+        Browse all portfolio research articles →
+      </a>
+    </p>
+  ),
+},
+
   const sections = {
     about: {
       title: "About",
