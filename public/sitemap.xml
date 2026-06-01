@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
@@ -23,6 +24,26 @@
 
   <url>
     <loc>https://www.horizonworks-lab.com/terms.html</loc>
+  </url>
+
+  <url>
+    <loc>https://www.horizonworks-lab.com/analysis/7-percent-return-15-year-retirement.html</loc>
+  </url>
+
+  <url>
+    <loc>https://www.horizonworks-lab.com/analysis/historical-outcomes-by-investment-horizon.html</loc>
+  </url>
+
+  <url>
+    <loc>https://www.horizonworks-lab.com/analysis/when-do-stocks-beat-60-40.html</loc>
+  </url>
+
+  <url>
+    <loc>https://www.horizonworks-lab.com/analysis/80-20-portfolio-tbills-vs-bonds-vs-gold.html</loc>
+  </url>
+
+  <url>
+    <loc>https://www.horizonworks-lab.com/analysis/sp500-vs-small-caps-historical-outcomes.html</loc>
   </url>
 
 </urlset>
