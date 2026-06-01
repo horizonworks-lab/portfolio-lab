@@ -696,12 +696,6 @@ export default function App() {
         <FooterInfo activeSection={activeFooterSection} setActiveSection={setActiveFooterSection} />
         <div className="h-[100px]" />
       </div>
-
-      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-3 pb-3 pointer-events-none">
-        <div className="pointer-events-auto w-full max-w-3xl h-[64px] rounded-2xl border border-slate-200 bg-white/95 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] grid place-items-center text-center">
-          <div><div className="text-[10px] uppercase tracking-[0.18em] text-slate-400">Sticky bottom ad</div><div className="text-xs text-slate-500">Fake AdSense preview · 320x50 / responsive</div></div>
-        </div>
-      </div>
     </main>
   );
 }
