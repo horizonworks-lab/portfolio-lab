@@ -14,9 +14,235 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Portfolio Lab</title>
+      <meta name="description" content="Compare historical portfolio outcomes across investment horizons using every rolling period in the data. Inflation-adjusted analyses of stocks, bonds, treasury bills and gold." />
+      <style>
+        #site-intro, #site-content, #site-footer {
+          max-width: 760px; margin: 0 auto; padding: 24px 16px;
+          background: #ffffff; color: #1f2933;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.6; box-sizing: border-box;
+        }
+        #site-content h2 { margin-top: 2em; }
+        #site-content table { border-collapse: collapse; width: 100%; }
+        #site-content th, #site-content td { border: 1px solid #ccd2d9; padding: 6px 10px; text-align: left; }
+        #site-footer { text-align: center; font-size: 14px; }
+        #site-footer a, #site-content a, #site-intro a { color: #0b5cad; }
+      </style>
       <script type="module" src="/src/main.jsx"></script>
   </head>
   <body>
+    <!-- ===== Intro above the tool (static HTML) ===== -->
+    <div id="site-intro">
+<section id="intro">
+  <h1>Horizon Works Lab: Explore How Time and Asset Allocation Shaped Historical Outcomes</h1>
+  <p>
+    Most investing discussions focus on average returns. This tool is built around something
+    different: the full range of outcomes. How wide was the gap between good and bad
+    historical periods? How did that gap change as investment horizons grew longer? And how
+    did different portfolios change the trade-off between risk and opportunity, after inflation?
+  </p>
+  <p>
+    Instead of showing what happened to an investor who started in a single year, Portfolio
+    Lab evaluates every possible starting year in the dataset and shows the full distribution
+    of historical outcomes for stocks, bonds, treasury bills and gold. Use it to build
+    intuition about risk, uncertainty and time, whether you are thinking about a house in five
+    years or retirement in thirty.
+  </p>
+  <p>
+    Below the tool you will find three analyses built with it. All returns are
+    inflation-adjusted and expressed as real annualized returns.
+    <a href="/about.html">Read why I built this</a>.
+  </p>
+</section>
+    </div>
+
     <div id="root"></div>
+
+    <!-- ===== Analyses, method and footer below the tool (static HTML) ===== -->
+    <main id="site-content">
+<section id="analysis-horizons">
+  <h2>How Different Were Historical Outcomes Over 5, 10, 20 and 30 Year Investment Horizons?</h2>
+  <p>One of the most common investing lessons is that a longer investment horizon reduces risk. Most investors have probably heard some version of the advice: "stay invested for the long term." But how much difference does time actually make?</p>
+  <p>One way to think about the question is whether longer holding periods increased average returns. Another way is to ask whether longer holding periods reduced the gap between good and bad historical outcomes.</p>
+  <p>For an investor saving for a house in five years, the range of possible outcomes may matter a great deal. For an investor saving for retirement in thirty years, that same range may look very different.</p>
+
+  <h3>Historical Outcomes</h3>
+  <p>To explore this question, I analyzed every rolling historical investment period available in the dataset using a 100% S&amp;P 500 portfolio. Rather than focusing on a single average return, the figures below show the full distribution of inflation-adjusted outcomes across different investment horizons.</p>
+
+  <h4>5-Year Horizon</h4>
+  <ul>
+    <li>Worst outcome: -10.3% real annualized return</li>
+    <li>5th percentile: -6.5%</li>
+    <li>25th percentile: +0.4%</li>
+    <li>Median outcome: +8.4%</li>
+    <li>75th percentile: +11.8%</li>
+    <li>95th percentile: +20.7%</li>
+    <li>Best outcome: +25.3%</li>
+  </ul>
+
+  <h4>10-Year Horizon</h4>
+  <ul>
+    <li>Worst outcome: -3.8% real annualized return</li>
+    <li>5th percentile: -2.4%</li>
+    <li>25th percentile: +3.1%</li>
+    <li>Median outcome: +6.7%</li>
+    <li>75th percentile: +11.1%</li>
+    <li>95th percentile: +15.0%</li>
+    <li>Best outcome: +17.9%</li>
+  </ul>
+
+  <h4>20-Year Horizon</h4>
+  <ul>
+    <li>Worst outcome: +0.6% real annualized return</li>
+    <li>5th percentile: +2.0%</li>
+    <li>25th percentile: +4.1%</li>
+    <li>Median outcome: +7.0%</li>
+    <li>75th percentile: +9.2%</li>
+    <li>95th percentile: +12.5%</li>
+    <li>Best outcome: +13.2%</li>
+  </ul>
+
+  <h4>30-Year Horizon</h4>
+  <ul>
+    <li>Worst outcome: +4.3% real annualized return</li>
+    <li>5th percentile: +4.6%</li>
+    <li>25th percentile: +6.1%</li>
+    <li>Median outcome: +7.3%</li>
+    <li>75th percentile: +8.1%</li>
+    <li>95th percentile: +9.6%</li>
+    <li>Best outcome: +10.1%</li>
+  </ul>
+  <p>The most obvious observation is how dramatically the range of typical outcomes narrowed as the investment horizon increased. Over five years, 90% of historical outcomes fell between -6.5% and +20.7% real annualized returns. Over ten years, that range narrowed to -2.4% and +15.0%. Over twenty years, it narrowed further to +2.0% and +12.5%. By thirty years, 90% of historical outcomes fell within a relatively narrow range of +4.6% to +9.6%.</p>
+  <p>Interestingly, the median outcome changed much less than the range itself. Median returns ranged from 6.7% to 8.4% across all four investment horizons. The larger effect of time was therefore not higher returns, but greater predictability.</p>
+  <p>Another observation is how quickly poor outcomes became less severe. Over five years, investors in the 25th percentile barely stayed ahead of inflation, earning just 0.4% real annualized returns. Over thirty years, the 25th percentile outcome increased to 6.1%.</p>
+  <p>This suggests that the most important benefit of a longer investment horizon may not be maximizing returns. It may be reducing uncertainty and making outcomes less dependent on starting year.</p>
+
+  <h3>Key Takeaways</h3>
+  <ul>
+    <li>The median outcome changed relatively little, ranging from 6.7% to 8.4% across all investment horizons.</li>
+    <li>The range containing 90% of historical outcomes narrowed from -6.5% to +20.7% over five years to +4.6% to +9.6% over thirty years.</li>
+    <li>The primary benefit of time was not higher returns, but greater predictability and less dependence on starting year.</li>
+  </ul>
+</section>
+
+<section id="analysis-stocks-vs-6040">
+  <h2>How Long Did You Need to Hold 100% Stocks Before They Started Beating 60/40 Even in Poor Historical Outcomes?</h2>
+  <p>One of the most common arguments for a 60/40 portfolio is that investors receive a smoother ride and better protection against poor outcomes. That trade-off is easy to understand over short periods. Bonds have historically reduced volatility and cushioned declines when stocks struggled.</p>
+  <p>But how long did that advantage persist? One way to think about the question is whether investors received better downside protection from a 60/40 portfolio. Another way is to ask whether there was a point where the higher expected return of stocks became large enough to offset that protection.</p>
+  <p>In other words: at what investment horizon did 100% stocks start outperforming 60/40 not only in the best historical outcomes, but also in the less favorable ones?</p>
+
+  <h3>Historical Outcomes</h3>
+  <p>To explore this question, I compared every rolling historical period available in the dataset using Portfolio A (100% S&amp;P 500) and Portfolio B (60% S&amp;P 500 / 40% 10-Year U.S. Treasury Bonds). All returns are inflation-adjusted and expressed as real annualized returns. Each line shows Portfolio A vs Portfolio B.</p>
+
+  <h4>3-Year Horizon</h4>
+  <ul>
+    <li>P95: 24.9% vs 16.3%</li>
+    <li>P75: 13.7% vs 9.5%</li>
+    <li>Median: 7.3% vs 5.7%</li>
+    <li>P25: 1.9% vs -0.2%</li>
+    <li>P5: -11.7% vs -6.8%</li>
+  </ul>
+  <p>Over three years, the traditional diversification story largely held. The 60/40 portfolio provided meaningful protection in poor historical periods. Investors gave up some upside potential, but experienced less severe downside when markets performed poorly.</p>
+
+  <h4>10-Year Horizon</h4>
+  <ul>
+    <li>P95: 15.0% vs 10.8%</li>
+    <li>P75: 11.1% vs 8.3%</li>
+    <li>Median: 6.7% vs 5.2%</li>
+    <li>P25: 3.1% vs 3.2%</li>
+    <li>P5: -2.4% vs -1.6%</li>
+  </ul>
+  <p>By ten years, the trade-off looked much smaller. The downside advantage of 60/40 remained, but only at the extreme lower end of the distribution. Meanwhile, 100% stocks delivered higher returns across most historical outcomes.</p>
+
+  <h4>30-Year Horizon</h4>
+  <ul>
+    <li>P95: 9.6% vs 7.1%</li>
+    <li>P75: 8.1% vs 6.3%</li>
+    <li>Median: 7.3% vs 5.4%</li>
+    <li>P25: 6.1% vs 4.0%</li>
+    <li>P5: 4.6% vs 3.4%</li>
+  </ul>
+  <p>Thirty years produced a very different picture. Not only did 100% stocks outperform 60/40 in median and favorable outcomes, they also outperformed in poor historical outcomes. Even investors in the bottom 5% of historical 30-year periods achieved higher real returns with 100% stocks than with 60/40.</p>
+  <p>One way to summarize the shift is to look at the 5th percentile outcome. Over three years, the 60/40 portfolio improved the 5th percentile outcome from -11.7% to -6.8%. Over thirty years, the relationship reversed: the 5th percentile outcome increased from 3.4% in the 60/40 portfolio to 4.6% in the 100% stock portfolio.</p>
+  <p>This suggests that diversification provided meaningful protection over shorter horizons, but that the long-term return advantage of stocks eventually became large enough to dominate even in poor historical outcomes.</p>
+
+  <h3>Key Takeaways</h3>
+  <ul>
+    <li>Over short investment horizons, 60/40 provided meaningful protection against poor historical outcomes. The 5th percentile improved from -11.7% to -6.8% over three-year periods.</li>
+    <li>By ten years, most of that downside advantage had disappeared while 100% stocks continued to deliver higher returns across most outcomes.</li>
+    <li>By thirty years, 100% stocks outperformed 60/40 across the entire distribution, including the bottom 5% of historical outcomes (4.6% vs 3.4% real annualized returns).</li>
+  </ul>
+</section>
+
+<section id="analysis-7-percent">
+  <h2>How Reasonable Is a 7% Return Assumption Over a 15 Year Retirement Horizon?</h2>
+  <p>A 7% annual return assumption is commonly used in retirement planning. One way to think about the question is whether 7% was achievable historically. Another way is to ask how often it was achieved. A third way is to ask what level of confidence is required before an assumption feels reasonable.</p>
+  <p>For some investors, an assumption may be reasonable if it occurred in roughly half of historical periods. Others may want it to occur in three quarters of periods before building a retirement plan around it.</p>
+
+  <h3>Historical Outcomes</h3>
+  <p>To explore this question, I analyzed every rolling 15-year period available in the historical dataset using a 100% S&amp;P 500 portfolio. Rather than focusing on a single average return, the figures below show the full distribution of historical outcomes experienced by investors who started in different years.</p>
+  <ul>
+    <li>Worst outcome: -0.5% real annualized return</li>
+    <li>25th percentile: +3.2%</li>
+    <li>Median outcome: +7.4%</li>
+    <li>75th percentile: +10.5%</li>
+    <li>Best outcome: +15.1%</li>
+  </ul>
+  <p>Half of all historical 15-year periods produced real returns above 7.4% per year. However, one quarter of historical periods produced less than 3.2% per year.</p>
+  <p>The more interesting observation may be that the answer depends on what "reasonable" means to you. If you are comfortable with an assumption that was achieved in roughly half of historical periods, then 7% appears broadly consistent with the historical record. If you prefer an assumption that was achieved in at least 75% of historical periods, a figure closer to 3.2% may be more appropriate.</p>
+  <p>Fifteen years is long enough for compounding to matter, but still short enough that starting year had a meaningful impact on outcomes. The spread between good and bad historical periods remained surprisingly wide.</p>
+
+  <h3>Key Takeaways</h3>
+  <ul>
+    <li>A 7% real return assumption was achieved in roughly half of historical 15-year periods.</li>
+    <li>Historical outcomes varied substantially depending on starting year, with returns ranging from -0.5% to +15.1% per year.</li>
+    <li>Whether 7% is a reasonable assumption depends largely on how much uncertainty you are willing to accept.</li>
+  </ul>
+</section>
+
+<section id="explore-more">
+  <h2>Explore Your Own Scenarios</h2>
+  <p>Historical data can help illuminate trade-offs, but it cannot determine which outcome an investor should prefer. These analyses looked at only a few portfolios (100% S&amp;P 500, and a 60/40 stock-bond allocation). Different conclusions may emerge with other asset allocations, bond maturities, treasury bills, gold or small-cap stocks.</p>
+  <p>Some investors may be comfortable accepting a wider range of possible outcomes in exchange for higher upside potential. Others may prefer to narrow the range of outcomes, even at the cost of lower returns. Use the tool above with your own assumptions.</p>
+  <h3>More analyses</h3>
+  <p><a href="/analysis.html">See all analyses</a></p>
+  <ul>
+    <li><a href="/analysis/80-20-portfolio-tbills-vs-bonds-vs-gold.html">What Role Did T-Bills, Bonds and Gold Historically Play in an 80/20 Portfolio?</a></li>
+    <li><a href="/analysis/sp500-vs-small-caps-historical-outcomes.html">What Happened When Investors Replaced Part of Their S&amp;P 500 Allocation With Small Caps?</a></li>
+  </ul>
+</section>
+
+<section id="method">
+  <h2>Data and Methodology</h2>
+  <p>
+    The analysis is based on rolling historical periods rather than selected examples. All
+    returns are adjusted for inflation using U.S. CPI data, so comparisons are in terms of
+    purchasing power. Portfolios are rebalanced annually to their target weights. The
+    underlying market data comes from long-term historical datasets compiled by Aswath
+    Damodaran at the NYU Stern School of Business.
+  </p>
+  <ul>
+    <li>Historical market data rather than forecasts</li>
+    <li>Actual historical periods rather than simulations</li>
+    <li>Investable asset classes (stocks, bonds, treasury bills, gold) rather than theoretical factors</li>
+    <li>Inflation-adjusted returns rather than nominal returns</li>
+    <li>Full distributions of outcomes rather than a single average return</li>
+  </ul>
+  <p>
+    Data period: 1928–2025. Fees and taxes are not included.
+    Past results do not guarantee future outcomes. This site is for educational purposes only
+    and is not investment advice. Last updated: November 1, 2026.
+    <a href="/about.html">More about the project</a>.
+  </p>
+</section>
+
+
+    </main>
+    <footer id="site-footer">
+  <a href="/about.html">About</a> ·
+  <a href="/analysis.html">Analysis</a> ·
+  <a href="/privacy.html">Privacy</a> ·
+  <a href="/contact.html">Contact</a>
+</footer>
   </body>
 </html>
