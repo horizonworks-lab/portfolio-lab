@@ -354,85 +354,6 @@ function MethodologyBlock() {
   );
 }
 
-function FooterInfo({ activeSection, setActiveSection }) {
-  const contactEmail = "mikael.strommer@gmail.com";
-
-  const sections = {
-     analysis: {
-  title: "Analysis",
-  content: (
-    <p>
-      <a
-        href="/analysis.html"
-        className="text-blue-600 hover:underline"
-      >
-        Browse all portfolio research articles →
-      </a>
-    </p>
-  ),
-},
-
-    about: {
-      title: "About",
-      content: (
-        <p>
-          HorizonWorks Lab is an independent portfolio research and visualization project. The tool helps users compare historical portfolio outcomes across different investment horizons using long-term market data.
-        </p>
-      ),
-    },
-    privacy: {
-      title: "Privacy Policy",
-      content: (
-        <div className="space-y-3">
-          <p>
-            This website may use cookies and third-party services, including Google AdSense, to display ads and help support the site. Third-party vendors, including Google, may use cookies to serve ads based on a user’s prior visits to this or other websites. Users can manage ad personalization through their Google ad settings.
-          </p>
-          <p>
-            This site does not require user accounts and does not intentionally collect personal financial information. Basic usage data may be processed by third-party services used for hosting, analytics, advertising, or site performance.
-          </p>
-          <p>
-            For questions about privacy, contact: {contactEmail}.
-          </p>
-        </div>
-      ),
-    },
-    contact: {
-      title: "Contact",
-      content: (
-        <p>
-          For questions, feedback, or corrections, contact: {contactEmail}.
-        </p>
-      ),
-    },
-  };
-
-  const active = activeSection ? sections[activeSection] : null;
-
-  return (
-    <footer className="mt-8 text-sm text-slate-500">
-      <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-slate-200 pt-5">
-        {Object.entries(sections).map(([key, section]) => (
-          <button
-            key={key}
-            type="button"
-            onClick={() => setActiveSection(activeSection === key ? null : key)}
-            className={`transition hover:text-slate-900 ${activeSection === key ? "text-slate-900" : "text-slate-500"}`}
-          >
-            {section.title}
-          </button>
-        ))}
-      </nav>
-
-      {active && (
-        <section className="mt-5 rounded-2xl border border-slate-200 bg-white/90 p-5 text-slate-600 shadow-[0_10px_30px_rgba(15,23,42,0.035)]">
-          <h2 className="mb-3 text-sm font-medium text-slate-900">{active.title}</h2>
-          <div className="text-sm leading-6">{active.content}</div>
-        </section>
-      )}
-    </footer>
-  );
-}
-
 export default function App() {
   const initialA = { sp500: 100, small_cap: 0, tbills: 0, bond10: 0, gold: 0 };
   const initialB = { sp500: 60, small_cap: 0, tbills: 0, bond10: 40, gold: 0 };
@@ -476,7 +397,6 @@ export default function App() {
   const [buttonSuccess, setButtonSuccess] = useState(false);
   const [chartAdKey, setChartAdKey] = useState(0);
   const [copySuccess, setCopySuccess] = useState(false);
-  const [activeFooterSection, setActiveFooterSection] = useState(null);
 
   const [draftH1, draftH2] = draftSelectedHorizons.length === 2
     ? draftSelectedHorizons
@@ -582,15 +502,6 @@ export default function App() {
       <style>{`:root{--slider-color:#224b75;} .portfolio-b{--slider-color:#2f6b55;} .clean-slider{appearance:none;height:8px;border-radius:999px;outline:none;} .clean-slider::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:999px;background:#fff;border:2.5px solid var(--slider-color);cursor:pointer;} .clean-slider::-moz-range-thumb{width:22px;height:22px;border-radius:999px;background:#fff;border:2.5px solid var(--slider-color);cursor:pointer;}`}</style>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-2">Two portfolios. Two horizons. <span className="text-emerald-600">One clear perspective.</span></h1>
-           <p className="mb-8">
-              <a
-                href="/analysis.html"
-                className="inline-flex items-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-              >
-                Questions Explored Using the Tool →
-              </a>
-            </p>
-
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <div><Card title="Portfolio A" data={draftA} setData={setDraftA} onNormalize={() => setDraftA(normalizePortfolio(draftA))} validationAttempted={validationAttempted} /></div>
           <div className="portfolio-b"><Card title="Portfolio B" data={draftB} setData={setDraftB} onNormalize={() => setDraftB(normalizePortfolio(draftB))} validationAttempted={validationAttempted} /></div>
@@ -674,7 +585,6 @@ export default function App() {
         />
 
         <MethodologyBlock />
-        <FooterInfo activeSection={activeFooterSection} setActiveSection={setActiveFooterSection} />
         <div className="h-[100px]" />
       </div>
     </main>
