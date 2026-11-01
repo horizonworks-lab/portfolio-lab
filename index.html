@@ -24,6 +24,9 @@
           font-size: 17px; line-height: 1.7; box-sizing: border-box;
         }
         #root { width: 100%; max-width: 1100px; margin: 0 auto; box-sizing: border-box; }
+        #site-nav { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 24px; font-size: 15px; }
+        #site-nav a { color: #0b5cad; text-decoration: none; }
+        #site-nav a:hover { text-decoration: underline; }
         #site-intro h1 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); line-height: 1.25; margin: 0 0 0.7em; }
         #site-intro p, #site-content p { margin: 0 0 1.2em; }
         #site-content h2 {
@@ -49,7 +52,16 @@
   <body>
     <!-- ===== Intro above the tool (static HTML) ===== -->
     <div id="site-intro">
-<section id="intro">
+    <nav id="site-nav" aria-label="Main">
+      <a href="/">Portfolio Tool</a>
+      <a href="/analysis.html">Analysis</a>
+      <a href="/about.html">About</a>
+      <a href="/methodology.html">Methodology</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+    <section id="intro">
   <h1>Horizon Works Lab: Explore How Time and Asset Allocation Shaped Historical Outcomes</h1>
   <p>
     Most investing discussions focus on average returns. This tool is built around something
